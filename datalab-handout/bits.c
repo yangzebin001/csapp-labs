@@ -140,6 +140,14 @@ NOTES:
  *   Rating: 1
  */
 int bitXor(int x, int y) {
+  // x & (~y) ---> x bit 1  y bit 0   to   1
+  // (~x) & y ---> x bit 0  y bit 1   to   1
+  
+  //xor = (x & (~y)) | ((~x) & y)  
+  
+  // (~a) & (~b) ---> both bit 0 to 1, others is 0
+  //  ~((~a) & (~b)) = a|b ---> both bit 0 to 0, others is 1
+  
   int a = x & (~y);
   int b = (~x) & y;
   int c = (~a) & (~b);
@@ -152,6 +160,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmin(void) {
+  // 0x80000000;
   return 1<<31;
 }
 //2
@@ -163,7 +172,11 @@ int tmin(void) {
  *   Rating: 2
  */
 int isTmax(int x) {
-  return ;
+  int Min = 1 << 31;
+  int z = Min & x; //should be 0
+  int f = Min | x; //should be 0xffffffff;
+  int d = f + 1;   //should be 0
+  return !(d + z);
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -173,7 +186,8 @@ int isTmax(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  return 2;
+  
+  return ;
 }
 /* 
  * negate - return -x 
