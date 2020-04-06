@@ -189,8 +189,8 @@ int allOddBits(int x) {
   int mask = 10;
   mask = mask + (mask << 4);
   mask = mask + (mask << 8);
-  mask = mask + (mask << 16);
-  int t = mask & x;
+  mask = mask + (mask << 16); //mask is (1010101010101010)2
+  int t = mask & x;  //should be mask
 
   return !(t ^ mask);
 }
@@ -215,7 +215,15 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+  int lowerbound = 48;
+  int upperbound = 57;
+  lowerbound = ~lowerbound + 1;
+  int nx = ~x + 1;
+  int c = x + lowerbound;  // x - lowerbound
+  int d = upperbound + nx; // upperbound - x
+  int signc = c >> 31; // should be zero
+  int signd = d >> 31; // should be zero
+  return !(signc + signd);
 }
 /* 
  * conditional - same as x ? y : z 
@@ -225,7 +233,11 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+  x = !!x; //to 0 or 1
+  x = ~x + 1; // to 000..0 or 111..1
+  int a = x & y;
+  int b = ~x & z;
+  return a|b;
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
